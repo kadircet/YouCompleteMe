@@ -89,7 +89,8 @@ YouCompleteMe maintainers directly using the <a href="#contact">contact details<
 <li>a <a href="http://clang.llvm.org/">Clang</a>-based engine that provides native semantic code
   completion for C/C++/Objective-C/Objective-C++/CUDA (from now on referred to
   as "the C-family languages"),</li>
-<li>a <a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based experimental completion engine for the C-family languages.</li>
+<li>a <a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based <strong>experimental</strong> completion engine for the C-family
+  languages.</li>
 <li>a <a href="https://github.com/davidhalter/jedi">Jedi</a>-based completion engine for Python 2 and 3,</li>
 <li>an <a href="https://github.com/OmniSharp/omnisharp-server">OmniSharp</a>-based completion engine for C#,</li>
 <li>a combination of <a href="https://github.com/nsf/gocode">Gocode</a> and <a href="https://github.com/Manishearth/godef">Godef</a> semantic engines for Go,</li>
@@ -1529,31 +1530,21 @@ deprecated values: <code>'vertical-split'</code>, <code>'new-tab'</code>, or <co
 option is set to 0 then no check is made on the size of the file you're opening.</p><p>Default: 1000</p><pre><code class="viml">let g:ycm_disable_for_files_larger_than_kb = 1000
 </code></pre><h3 id="the-gycm_use_clangd-option">The <code>g:ycm_use_clangd</code> option</h3><p>This option controls whether <strong>clangd</strong> should be used as completion engine for
 C-family languages. Can take one of the following values: <code>'Always'</code>, <code>'Auto'</code>
-or <code>'Never'</code>. With meanings:</p><ul>
-<li>
-<p><code>'Always'</code>: YCM will use clangd completer directly.</p>
-</li>
-<li>
-<p><code>'Auto'</code>: YCM will use clangd only if clangd binary exists in third party or
-   it was provided with <code>ycm_clangd_binary_path</code> option.</p>
-</li>
-<li>
-<p><code>'Never'</code>: YCM will never use clangd completer.</p>
-</li>
+or <code>'Never'</code>, with meanings:</p><ul>
+<li><code>'Always'</code>: YCM will use clangd completer directly.</li>
+<li><code>'Auto'</code>: YCM will use clangd only if clangd binary exists in third party or
+  it was provided with <code>ycm_clangd_binary_path</code> option.</li>
+<li><code>'Never'</code>: YCM will never use clangd completer.</li>
 </ul><p>Default: <code>'Auto'</code></p><pre><code class="viml">let g:ycm_use_clangd = 'Auto'
 </code></pre><h3 id="the-gycm_clangd_binary_path-option">The <code>g:ycm_clangd_binary_path</code> option</h3><p>When <code>ycm_use_clangd</code> option is set to <code>'Always'</code>, this option sets the path to
 <strong>clangd</strong> binary. If <code>ycm_use_clangd</code> option is set to <code>'Auto'</code> this option
-sets the fallback path in case clangd binary in third party doesn't exist.</p><p>Default: <code>''</code></p><pre><code class="viml">let g:ycm_clangd_binary_path = '/path/to/clangd'
+sets the fallback path in case clangd binary in third party doesn't exist.</p><p>Default: <code>''</code></p><pre><code class="viml">let g:ycm_clangd_binary_path = ''
 </code></pre><h3 id="the-gycm_clangd_args-option">The <code>g:ycm_clangd_args</code> option</h3><p>This option controls the command line arguments passed to clangd binary, it
-appends new options and overrides the existing ones.</p><p>Default: <code>[]</code></p><pre><code class="viml">let g:ycm_clangd_args = ['-arg1', '-arg2=x']
+appends new options and overrides the existing ones.</p><p>Default: <code>[]</code></p><pre><code class="viml">let g:ycm_clangd_args = []
 </code></pre><h3 id="the-gycm_clangd_uses_ycmd_caching-option">The <code>g:ycm_clangd_uses_ycmd_caching</code> option</h3><p>This option controls which ranking and filtering algorithm to use for completion
 items. It can take values:</p><ul>
-<li>
-<p><code>1</code>: Uses ycmd's caching and filtering logic.</p>
-</li>
-<li>
-<p><code>0</code>: Uses clangd's caching and filtering logic.</p>
-</li>
+<li><code>1</code>: Uses ycmd's caching and filtering logic.</li>
+<li><code>0</code>: Uses clangd's caching and filtering logic.</li>
 </ul><p>Default: <code>1</code></p><pre><code class="viml">let g:ycm_clangd_uses_ycmd_caching = 1
 </code></pre><h2 id="faq">FAQ</h2><h3 id="i-used-to-be-able-to-import-vim-in-ycm_extra_confpy-but-now-cant">I used to be able to <code>import vim</code> in <code>.ycm_extra_conf.py</code>, but now can't</h3><p>YCM was rewritten to use a client-server architecture where most of the logic is
 in the <a href="https://github.com/Valloric/ycmd">ycmd server</a>. So the magic <code>vim</code> module you could have previously
@@ -1774,12 +1765,7 @@ in your <code>.ycm_extra_conf.py</code> file to the path of your Anaconda Python
   }
 </code></pre><p>See <a href="#python-semantic-completion">the Python Semantic Completion section</a> for
 more details.</p><h3 id="automatic-import-insertion-after-selecting-a-completion-breaks-undo">Automatic import insertion after selecting a completion breaks undo</h3><p>This is a Vim bug fixed in version 8.1.0256. Update your Vim to this version or
-later.</p><h3 id="it-seems-clangd-is-not-working-for-me">It seems clangd is not working for me</h3><p>You can disable clangd by adding the following to your <code>vimrc</code>:</p><pre><code class="viml">let g:ycm_use_clangd = 'Never'
-</code></pre><p>Clangd developers would really appreciate if you can take your time and <a href="https://github.com/clangd/clangd/issues/new">file a
-bug</a>.</p><p>If you haven't installed libclang completer you won't have any C-family semantic
-completion, to install it using:</p><pre><code>cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer --clangd-completer
-</code></pre><h2 id="contributor-code-of-conduct">Contributor Code of Conduct</h2><p>Please note that this project is released with a <a href="https://github.com/Valloric/YouCompleteMe/blob/master/CODE_OF_CONDUCT.md">Contributor Code of
+later.</p><h2 id="contributor-code-of-conduct">Contributor Code of Conduct</h2><p>Please note that this project is released with a <a href="https://github.com/Valloric/YouCompleteMe/blob/master/CODE_OF_CONDUCT.md">Contributor Code of
 Conduct</a>. By participating in this project you agree to abide by its
 terms.</p><h2 id="contact">Contact</h2><p>If you have questions about the plugin or need help, please join the <a href="https://gitter.im/Valloric/YouCompleteMe">Gitter
 room</a> or use the <a href="https://groups.google.com/forum/?hl=en#!forum/ycm-users">ycm-users</a> mailing list.</p><p>If you have bug reports or feature suggestions, please use the <a href="https://github.com/Valloric/YouCompleteMe/issues?state=open">issue
