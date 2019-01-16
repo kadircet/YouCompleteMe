@@ -1529,11 +1529,18 @@ deprecated values: <code>'vertical-split'</code>, <code>'new-tab'</code>, or <co
 option is set to 0 then no check is made on the size of the file you're opening.</p><p>Default: 1000</p><pre><code class="viml">let g:ycm_disable_for_files_larger_than_kb = 1000
 </code></pre><h3 id="the-gycm_use_clangd-option">The <code>g:ycm_use_clangd</code> option</h3><p>This option controls whether <strong>clangd</strong> should be used as completion engine for
 C-family languages. Can take one of the following values: <code>'Always'</code>, <code>'Auto'</code>
-or <code>'Never'</code>. With meanings:
- - <code>'Always'</code>: YCM will use clangd completer directly.
- - <code>'Auto'</code>: YCM will use clangd only if clangd binary exists in third party or
-   it was provided with <code>ycm_clangd_binary_path</code> option.
- - <code>'Never'</code>: YCM will never use clangd completer.</p><p>Default: <code>'Auto'</code></p><pre><code class="viml">let g:ycm_use_clangd = 'Auto'
+or <code>'Never'</code>. With meanings:</p><ul>
+<li>
+<p><code>'Always'</code>: YCM will use clangd completer directly.</p>
+</li>
+<li>
+<p><code>'Auto'</code>: YCM will use clangd only if clangd binary exists in third party or
+   it was provided with <code>ycm_clangd_binary_path</code> option.</p>
+</li>
+<li>
+<p><code>'Never'</code>: YCM will never use clangd completer.</p>
+</li>
+</ul><p>Default: <code>'Auto'</code></p><pre><code class="viml">let g:ycm_use_clangd = 'Auto'
 </code></pre><h3 id="the-gycm_clangd_binary_path-option">The <code>g:ycm_clangd_binary_path</code> option</h3><p>When <code>ycm_use_clangd</code> option is set to <code>'Always'</code>, this option sets the path to
 <strong>clangd</strong> binary. If <code>ycm_use_clangd</code> option is set to <code>'Auto'</code> this option
 sets the fallback path in case clangd binary in third party doesn't exist.</p><p>Default: <code>''</code></p><pre><code class="viml">let g:ycm_clangd_binary_path = '/path/to/clangd'
