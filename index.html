@@ -1547,9 +1547,14 @@ sets the fallback path in case clangd binary in third party doesn't exist.</p><p
 </code></pre><h3 id="the-gycm_clangd_args-option">The <code>g:ycm_clangd_args</code> option</h3><p>This option controls the command line arguments passed to clangd binary, it
 appends new options and overrides the existing ones.</p><p>Default: <code>[]</code></p><pre><code class="viml">let g:ycm_clangd_args = ['-arg1', '-arg2=x']
 </code></pre><h3 id="the-gycm_clangd_uses_ycmd_caching-option">The <code>g:ycm_clangd_uses_ycmd_caching</code> option</h3><p>This option controls which ranking and filtering algorithm to use for completion
-items. It can take values:
-- <code>1</code>: Uses ycmd's caching and filtering logic.
-- <code>0</code>: Uses clangd's caching and filtering logic.</p><p>Default: <code>1</code></p><pre><code class="viml">let g:ycm_clangd_uses_ycmd_caching = 1
+items. It can take values:</p><ul>
+<li>
+<p><code>1</code>: Uses ycmd's caching and filtering logic.</p>
+</li>
+<li>
+<p><code>0</code>: Uses clangd's caching and filtering logic.</p>
+</li>
+</ul><p>Default: <code>1</code></p><pre><code class="viml">let g:ycm_clangd_uses_ycmd_caching = 1
 </code></pre><h2 id="faq">FAQ</h2><h3 id="i-used-to-be-able-to-import-vim-in-ycm_extra_confpy-but-now-cant">I used to be able to <code>import vim</code> in <code>.ycm_extra_conf.py</code>, but now can't</h3><p>YCM was rewritten to use a client-server architecture where most of the logic is
 in the <a href="https://github.com/Valloric/ycmd">ycmd server</a>. So the magic <code>vim</code> module you could have previously
 imported in your <code>.ycm_extra_conf.py</code> files doesn't exist anymore.</p><p>To be fair, importing the magic <code>vim</code> module in extra conf files was never
