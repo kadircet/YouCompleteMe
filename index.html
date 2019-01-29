@@ -121,10 +121,10 @@ or <code>::</code> while typing in insert mode (for C++; different triggers are 
 other languages), the semantic engine is triggered (it can also be triggered
 with a keyboard shortcut; see the rest of the docs).</p><p>The last thing that you can see in the demo is YCM's diagnostic display features
 (the little red X that shows up in the left gutter; inspired by <a href="https://github.com/scrooloose/syntastic">Syntastic</a>)
-if you are editing a C-family file. As completer engine compiles your file and
-detects warnings or errors, they will be presented in various ways. You don't
-need to save your file or press any keyboard shortcut to trigger this, it "just
-happens" in the background.</p><p>In essence, YCM obsoletes the following Vim plugins because it has all of their
+if you are editing a C-family file. As the completer engine compiles your file
+and detects warnings or errors, they will be presented in various ways. You
+don't need to save your file or press any keyboard shortcut to trigger this, it
+"just happens" in the background.</p><p>In essence, YCM obsoletes the following Vim plugins because it has all of their
 features plus extra:</p><ul>
 <li>clang_complete</li>
 <li>AutoComplPop</li>
@@ -388,8 +388,9 @@ compiler that can compile C-family languages. The <code>libclang</code> library 
 provides is used to power the YCM semantic completion engine for those
 languages. YCM is designed to work with libclang version 7.0.0 or higher.</p>
 <p>In addition to <code>libclang</code>, YCM also supports an <strong>experimental</strong>
-<a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based completer. You can download the latest version of <a href="https://clang.llvm.org/extra/clangd.html">clangd</a> from <a href="http://llvm.org/releases/download.html">llvm.org releases</a>. YCM is deisnged to work with
-<a href="https://clang.llvm.org/extra/clangd.html">clangd</a> version 7.0.0 or higher.</p>
+<a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based completer. You can download the latest version of <a href="https://clang.llvm.org/extra/clangd.html">clangd</a> from <a href="http://llvm.org/releases/download.html">llvm.org releases</a>. Follow Step 4 to learn how to
+tell YCM where to find clangd binary. Please note that YCM is desinged to
+work with <a href="https://clang.llvm.org/extra/clangd.html">clangd</a> version 7.0.0 or higher.</p>
 <p>You can use the system libclang or clangd <em>only if you are sure it is
 version 7.0.0 or higher</em>, otherwise don't. Even if it is, we recommend using
 the <a href="http://llvm.org/releases/download.html">official binaries from llvm.org</a> if at all possible.
@@ -766,7 +767,39 @@ unrelated completion strings (type/function names that are not actually
 members). This is because Clang fails to build a precompiled preamble for your
 file if there are any errors in the included headers and that preamble is key to
 getting fast completions.</p><p>Call the <code>:YcmDiags</code> command to see if any errors or warnings were detected in
-your file.</p><h3 id="java-semantic-completion">Java Semantic Completion</h3><p><strong>NOTE</strong>: Java support is currently experimental. Please let us know your
+your file.</p><h4 id="selecting-completion-engine">Selecting completion engine</h4><p>Currently YCM supports two completion engines for C-family semantic completion.
+One [libclang]-based and an <strong>experimental</strong> <a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based completer. When in
+doubt we recommend using [libclang]-based engine. Here is a quick comparision of
+the two completer engines:</p><ul>
+<li><strong>ycm_extra_conf.py</strong>: Currently clangd does not support ycm_extra_conf.py
+    therefore you must have a compilation database, whereas libclang can work
+    with both.</li>
+<li><strong>Project wide indexing</strong>: Clangd has both dynamic and static index support.
+    The dynamic index stores up-to-date symbols coming from any files you are
+    currently editing, wherea static index contains project-wide symbol
+    information. This symbol information is used by CodeCompletion, GoTo and
+    FindReferences requests. Whereas libclang is limited to current TU.</li>
+<li><strong>GoTo* </strong>: Clangd provides all the GoTo requests libclang provides and it
+    improves those using the above mentioned index information to contain
+    project-wide information rather than just the current TU.</li>
+<li><strong>Rename</strong>: Clangd can perform semantic rename operations on current file,
+    whereas libclang doesn’t support such functionality.</li>
+<li><strong>Code Completion</strong>: Clangd can perform code completions at a lower latency
+    than libclang also it has information about all the symbols on your project
+    so it can suggest items outside your current TU and also provides
+    proper #include insertions for those items.</li>
+<li><strong>Format Code</strong>: Clangd provides code formatting either for the selected
+    lines or the whole file, whereas libclang doesn’t have such functionality.</li>
+<li><strong>Performance</strong>: Clangd has faster reparse and code completion times
+    compared to libclang.</li>
+</ul><p>Note that for clangd to have some of the above mentioned functionality, you need
+to provide a static index. For details on how to do that please have a look at
+<a href="https://clang.llvm.org/extra/clangd.html#project-wide-indexing">clangd-indexing</a>.</p><p>To enable:</p><ul>
+<li>[libclang][]-based completer pass <code>--clang-completer</code></li>
+<li><a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based completer pass <code>--clangd-completer</code></li>
+</ul><p>to <code>install.py</code> while following the <a href="#installation">installation guide</a>. As
+mentioned before, pass <code>--clang-completer</code> when in doubt. Since <a href="https://clang.llvm.org/extra/clangd.html">clangd</a>-based
+completer is still experimental.</p><h3 id="java-semantic-completion">Java Semantic Completion</h3><p><strong>NOTE</strong>: Java support is currently experimental. Please let us know your
 <a href="#contact">feedback</a>.</p><h4 id="java-quick-start">Java quick Start</h4><ol>
 <li>
 <p>Ensure that you have enabled the Java completer. See the
